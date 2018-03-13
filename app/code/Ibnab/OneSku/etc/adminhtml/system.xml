@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ibnab_config" translate="label" sortOrder="200">
+            <label>Ibnab</label>
+        </tab>
+        <section id="ibnab_onesku_config" translate="label" type="text" sortOrder="73" showInDefault="1" showInWebsite="0" showInStore="0">
+            <class>separator-top</class>
+            <label>One Sku</label>
+            <tab>ibnab_config</tab>
+            <resource>Ibnab_OneSku::ibnab_onesku_config</resource>  
+            <group id="general" translate="label"  sortOrder="88" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <comment></comment>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable OneSku</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment></comment>
+                </field>
+            </group>  
+
+        </section>
+    </system>
+</config>
