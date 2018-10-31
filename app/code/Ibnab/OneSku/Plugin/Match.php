@@ -91,7 +91,9 @@ class Match extends \Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match 
     ) {
         /** @var $query \Magento\Framework\Search\Request\Query\Match */
         $resultSku = 0;
-        $queryValue = $this->prepareQuery($query->getValue(), $conditionType);
+        $squery=$query->getValue();
+        $squery=str_replace($this->replaceSymbols,'',$squery);
+        $queryValue = $this->prepareQuery($squery, $conditionType);
         $fieldList = [];
         foreach ($query->getMatches() as $match) {
             $fieldList[] = $match['field'];
@@ -114,12 +116,12 @@ class Match extends \Magento\Framework\Search\Adapter\Mysql\Query\Builder\Match 
             $connection = $this->_resource->getConnection(\Magento\Framework\App\ResourceConnection::DEFAULT_CONNECTION);
             $mainFullTextScope = $this->fulltextResource->getMainTable() . "_scope" . $this->storeManager->getStore()->getId();
             $tblFullTextScope = $connection->getTableName($mainFullTextScope);
-            $resultSku = $connection->fetchOne('SELECT count(entity_id) FROM `' . $tblFullTextScope . '` WHERE attribute_id=' . $attributeId . ' And data_index=\'' . $query->getValue() . '\'');
+            $resultSku = $connection->fetchOne('SELECT count(entity_id) FROM `' . $tblFullTextScope . '` WHERE attribute_id=' . $attributeId . ' And data_index=\'' . $squery . '\'');
         }
         }
 		
         if ($resultSku == 1) {
-            $matchQuery = 'data_index=\'' . $query->getValue() . '\'';
+            $matchQuery = 'data_index=\'' . $squery . '\'';
         }else{
             $matchQuery = $this->fulltextHelper->getMatchQuery(
                     $columns, $queryValue, $this->fulltextSearchMode
